@@ -54,59 +54,52 @@
 
 <body>
     <div class="container">
-        <button onclick="generateAndDownloadPDF()">Submit</button>
+        <button onclick="makeGroups()">Submit</button>
 
         <div class="groups" id="groups"></div>
         
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
     <script>
-        function generateAndDownloadPDF() {
-            var boysArray = [
-                "Sergej Matković", "Đorđe Gajić", "Jovan Šovljanski", "Rajan Nikić", "Andrej Nedeljkov",
-                "Nemanja Sorajić", "Maksim Malbaša", "Aleksa Premović", "Vukašin Jeličić",
-                "Luka Ćirić", "Matija Tukodi", "Kristian Šubonj", "Luka Miljuš", "Marko Simović", "Aleksandar Špirić", "Nikita Aleksejev", "Aleksa Dragosavljević"
-            ];
+function makeGroups() {
+    var boysArray = [
+        "Sergej Matković", "Đorđe Gajić", "Jovan Šovljanski", "Rajan Nikić", "Andrej Nedeljkov",
+        "Nemanja Sorajić", "Maksim Malbaša", "Aleksa Premović", "Vukašin Jeličić",
+        "Luka Ćirić", "Matija Tukodi", "Kristian Šubonj", "Luka Miljuš", "Marko Simović", "Aleksandar Špirić", "Nikita Aleksejev", "Aleksa Dragosavljević"
+    ];
 
-            var girlsArray = [
-                "Srna Matković", "Sara Rističević", "Sara Koprivica", "Anđela Vapa"
-            ];
+    var girlsArray = [
+        "Srna Matković", "Sara Rističević", "Sara Koprivica", "Anđela Vapa"
+    ];
 
-            shuffleArray(girlsArray);
-            shuffleArray(boysArray);
+    shuffleArray(girlsArray);
+    shuffleArray(boysArray);
 
-            var numGroups = 4;
-            var groupSize = 5; 
-            var groupsHTML = "";
+    var numGroups = 4;
+    var groupSize = 5; 
+    var groupsHTML = "";
 
-            for (var i = 0; i < numGroups; i++) {
-                var groupMembers = "";
-                var girlsInGroup = 0; 
-                var currentGroupSize = (i === numGroups - 1) ? groupSize + 1 : groupSize; 
+    for (var i = 0; i < numGroups; i++) {
+        var groupMembers = "";
+        var girlsInGroup = 0; 
+        var currentGroupSize = (i === numGroups - 1) ? groupSize + 1 : groupSize; 
 
-                for (var j = 0; j < currentGroupSize; j++) {
-                    if (girlsInGroup < 1 && girlsArray.length > 0) { 
-                        var girl = girlsArray.shift();
-                        groupMembers += girl + " (Girl)<br>";
-                        girlsInGroup++; 
-                    } else {
-                        if (boysArray.length > 0) {
-                            groupMembers += boysArray.shift() + "<br>";
-                        }
-                    }
+        for (var j = 0; j < currentGroupSize; j++) {
+            if (girlsInGroup < 1 && girlsArray.length > 0) { 
+                var girl = girlsArray.shift();
+                groupMembers += girl + " (Girl)<br>";
+                girlsInGroup++; 
+            } else {
+                if (boysArray.length > 0) {
+                    groupMembers += boysArray.shift() + "<br>";
                 }
-                groupsHTML += "<div><strong>Group " + (i + 1) + ":</strong><br>" + groupMembers + "</div>";
             }
-
-            document.getElementById("groups").innerHTML = groupsHTML;
-
-            // Create PDF and download
-            var doc = new jsPDF();
-            doc.text(groupsHTML, 10, 10);
-            doc.save('groups.pdf');
         }
+        groupsHTML += "<div><strong>Group " + (i + 1) + ":</strong><br>" + groupMembers + "</div>";
+    }
 
+    document.getElementById("groups").innerHTML = groupsHTML;
+}
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
