@@ -76,19 +76,19 @@ function makeGroups() {
     shuffleArray(boysArray);
 
     var numGroups = 4;
-    var groupSize = 5; // Base group size
+    var groupSize = 5; 
     var groupsHTML = "";
 
     for (var i = 0; i < numGroups; i++) {
         var groupMembers = "";
-        var girlsInGroup = 0; // Keep track of the number of girls in the current group
-        var currentGroupSize = (i === numGroups - 1) ? groupSize + 1 : groupSize; // Adjust group size for the last group
+        var girlsInGroup = 0; 
+        var currentGroupSize = (i === numGroups - 1) ? groupSize + 1 : groupSize; 
 
         for (var j = 0; j < currentGroupSize; j++) {
-            if (girlsInGroup < 1 && girlsArray.length > 0) { // Ensure there's at most one girl per group
+            if (girlsInGroup < 1 && girlsArray.length > 0) { 
                 var girl = girlsArray.shift();
                 groupMembers += girl + " (Girl)<br>";
-                girlsInGroup++; // Increment the count of girls in the group
+                girlsInGroup++; 
             } else {
                 if (boysArray.length > 0) {
                     groupMembers += boysArray.shift() + "<br>";
@@ -100,7 +100,6 @@ function makeGroups() {
 
     document.getElementById("groups").innerHTML = groupsHTML;
 }
-        // Fisher-Yates shuffle algorithm
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
