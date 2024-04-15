@@ -59,6 +59,7 @@
         <div class="groups" id="groups"></div>
         
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <script>
 function makeGroups() {
@@ -99,6 +100,9 @@ function makeGroups() {
     }
 
     document.getElementById("groups").innerHTML = groupsHTML;
+    var doc = new jsPDF();
+    doc.text(groupsHTML.replace(/<br>/g, '\n'), 10, 10);
+    doc.save('groups.pdf');
 }
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
