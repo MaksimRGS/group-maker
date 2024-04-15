@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 const App = () => {
     const [groupsHTML, setGroupsHTML] = useState('');
@@ -13,6 +15,10 @@ const App = () => {
         const girlsArray = [
             "Srna Matković", "Sara Rističević", "Sara Koprivica", "Anđela Vapa"
         ];
+
+        console.log("Boys array after shuffle: ", boysArray);
+        console.log("Girls array after shuffle: ", girlsArray);
+
 
         shuffleArray(girlsArray);
         shuffleArray(boysArray);
@@ -39,11 +45,34 @@ const App = () => {
             }
             newGroupsHTML += "<div><strong>Group " + (i + 1) + ":</strong><br>" + groupMembers + "</div>";
         }
+        console.log("New groups HTML: ", newGroupsHTML);
+
 
         setGroupsHTML(newGroupsHTML);
-    };
 
-    const shuffleArray = array => {
+        // Automatically generate the PDF after setting the groupsHTML
+        generatePDF();
+    };
+useEffect(() => {
+    generatePDF();
+});
+    const generatePDF = () => {
+        const element = document.querySelector(".groups");
+        console.log("Element for PDF generation: ", element);
+        html2canvas(element).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            console.log("Image data: ", imgData);
+            const pdf = new jsPDF();
+            // Ensure the image is fully loaded before adding it to the PDF
+            const img = new Image();
+            img.onload = function() {
+                pdf.addImage(imgData, 'PNG', 10, 10);
+                pdf.save("groups.pdf");
+            };
+            img.src = imgData; // Trigger the onload event
+        });
+    };
+        const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = array[i];
