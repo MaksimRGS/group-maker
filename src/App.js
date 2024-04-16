@@ -50,27 +50,6 @@ const App = () => {
 
         setGroupsHTML(newGroupsHTML);
 
-        // Automatically generate the PDF after setting the groupsHTML
-        generatePDF();
-    };
-useEffect(() => {
-    generatePDF();
-});
-    const generatePDF = () => {
-        const element = document.querySelector(".groups");
-        console.log("Element for PDF generation: ", element);
-        html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            console.log("Image data: ", imgData);
-            const pdf = new jsPDF();
-            // Ensure the image is fully loaded before adding it to the PDF
-            const img = new Image();
-            img.onload = function() {
-                pdf.addImage(imgData, 'PNG', 10, 10);
-                pdf.save("groups.pdf");
-            };
-            img.src = imgData; // Trigger the onload event
-        });
     };
         const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
