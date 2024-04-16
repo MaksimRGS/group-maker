@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import React, { useState } from 'react';
 
 const App = () => {
     const [groupsHTML, setGroupsHTML] = useState('');
