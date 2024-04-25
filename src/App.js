@@ -21,16 +21,19 @@ const App = () => {
         shuffleArray(boysArray);
 
         const numGroups = 7;
-        const groupSize = 3; // Each group will have 6 members
+        const groupSize = 3;
         let newGroupsHTML = "";
 
         for (let i = 0; i < numGroups; i++) {
             let groupMembers = "";
+            let girlsInGroup = 0;
             for (let j = 0; j < groupSize; j++) {
-                if (girlsArray.length > 0) {
-                    const girl = girlsArray.shift();
-                    groupMembers += girl + " (Girl)<br>";
-                } else if (boysArray.length > 0) {
+                if (j === 0 && girlsInGroup === 0) { // Ensure Maksim Malbaša is with a girl
+                    groupMembers += "Maksim Malbaša<br>" + girlsArray[i % girlsArray.length] + " (Girl)<br>";
+                    girlsInGroup++;
+                } else if (girlsArray.length > 0) {
+                    groupMembers += boysArray.shift() + "<br>" + girlsArray.shift() + " (Girl)<br>";
+                } else {
                     groupMembers += boysArray.shift() + "<br>";
                 }
             }
