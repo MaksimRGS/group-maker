@@ -17,39 +17,31 @@ const App = () => {
         console.log("Boys array after shuffle: ", boysArray);
         console.log("Girls array after shuffle: ", girlsArray);
 
-
         shuffleArray(girlsArray);
         shuffleArray(boysArray);
 
-        const numGroups = 4;
-        const groupSize = 5;
+        const numGroups = 7;
+        const groupSize = 3; // Each group will have 6 members
         let newGroupsHTML = "";
 
         for (let i = 0; i < numGroups; i++) {
             let groupMembers = "";
-            let girlsInGroup = 0;
-            const currentGroupSize = (i === numGroups - 1) ? groupSize + 1 : groupSize;
-
-            for (let j = 0; j < currentGroupSize; j++) {
-                if (girlsInGroup < 1 && girlsArray.length > 0) {
+            for (let j = 0; j < groupSize; j++) {
+                if (girlsArray.length > 0) {
                     const girl = girlsArray.shift();
                     groupMembers += girl + " (Girl)<br>";
-                    girlsInGroup++;
-                } else {
-                    if (boysArray.length > 0) {
-                        groupMembers += boysArray.shift() + "<br>";
-                    }
+                } else if (boysArray.length > 0) {
+                    groupMembers += boysArray.shift() + "<br>";
                 }
             }
             newGroupsHTML += "<div><strong>Group " + (i + 1) + ":</strong><br>" + groupMembers + "</div>";
         }
         console.log("New groups HTML: ", newGroupsHTML);
 
-
         setGroupsHTML(newGroupsHTML);
-
     };
-        const shuffleArray = array => {
+
+    const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = array[i];
